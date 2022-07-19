@@ -27,10 +27,6 @@ List<List<APEX_Invoice__c>> invoiceList = new List<List<APEX_Invoice__c>>();
 for(Integer i=0; i<customerList.size();i++){
        invoiceList.add(customerList[i].Invoices__r);
   
-  /* Integer count = [Select count() from APEX_Invoice__c where APEX_Customer__c = :customerList[i].Id];
-  for(Integer j=0;j<count;j++){
-    invoiceList[j].add(customerList[i].Invoices__r);
-  } */
 }
  System.debug('Size of the invoice List is '+invoiceList.size() );
  System.debug('invoiceList is '+invoiceList);
