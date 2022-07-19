@@ -1,4 +1,4 @@
-//http://mytutorialrack.com/
+/* //http://mytutorialrack.com/
 //Check the complete course here https://mytutorialrack.com/salesforce-platform-developer-1-certification-course/
 
 //Fetching Child Records using SOQL
@@ -7,3 +7,33 @@ System.debug('ListCustomers '+ListCustomers);//Parent Record
 
 List<apex_invoice__c> ListOfInvoices = ListCustomers[0].Invoices__r;//By this notation, you could fetch the child records and save it in List
 System.debug('The invoice records related to the ABC customer '+ListOfInvoices);//Child records
+*/
+
+//Rathindra's code
+
+List<Customer> customerList=[Select id, name, (Select id, name from Invoices__r) from Customer where name in
+('EASTMAN CHEMICAL','EXXONMOBIL CHEMICAL')];
+for(Customer cust : customerList){
+    System.debug('Value of customer having id '+cust.id+' is '+cust);
+}
+System.debug('Size of the customerList is '+customerList.size() );
+
+/*List<APEX_Invoice__c> invoiceList = new List<APEX_Invoice__c>();
+for(Integer i=0; i<customerList.size();i++){
+       for(APEX_Invoice__c invoice : customerList[i].Invoices__r){
+          invoiceList.add(invoice);
+       } */
+List<List<APEX_Invoice__c>> invoiceList = new List<List<APEX_Invoice__c>>();
+for(Integer i=0; i<customerList.size();i++){
+       invoiceList.add(customerList[i].Invoices__r);
+  
+  /* Integer count = [Select count() from APEX_Invoice__c where APEX_Customer__c = :customerList[i].Id];
+  for(Integer j=0;j<count;j++){
+    invoiceList[j].add(customerList[i].Invoices__r);
+  } */
+}
+ System.debug('Size of the invoice List is '+invoiceList.size() );
+ System.debug('invoiceList is '+invoiceList);
+ for(APEX_Invoice__c inv : invoiceList){
+    System.debug('Value of invoice having id '+inv.id+' is '+inv);
+} 
